@@ -1,12 +1,6 @@
 name: Formats
 
-on:
-  pull_request:
-    branches:
-      - "main"
-  push:
-    tags:
-        - "v*"
+on: ['push', 'pull_request']
 
 # Cancels all previous workflow runs for the same branch that have not yet completed.
 concurrency:
