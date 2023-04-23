@@ -12,6 +12,8 @@
 */
 
 use Air\Quality\Tests\TestCase;
+use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface;
 
 uses(TestCase::class)->in('Unit', 'Feature');
 
@@ -41,7 +43,9 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function http(string $method, string $url = '', array $options = []): ResponseInterface
 {
-    // ..
+    $httpClient = new Client();
+
+    return $httpClient->request($method, $url, $options);
 }
