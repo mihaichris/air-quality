@@ -1,6 +1,12 @@
 name: Formats
 
-on: ['push', 'pull_request']
+on:
+  pull_request:
+    branches:
+      - "main"
+  push:
+    branches:
+      - "main"
 
 # Cancels all previous workflow runs for the same branch that have not yet completed.
 concurrency:
@@ -19,7 +25,7 @@ jobs:
         php: [8.2]
         dependency-version: [prefer-lowest, prefer-stable]
 
-    name: Formats P${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
+    name: Formats PHP${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
 
     steps:
 
