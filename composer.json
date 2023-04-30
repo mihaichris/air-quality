@@ -5,7 +5,8 @@
         "php",
         "package",
         "air",
-        "quality"
+        "quality",
+        "api"
     ],
     "license": "MIT",
     "authors": [
@@ -20,8 +21,8 @@
     },
     "require-dev": {
         "laravel/pint": "^1.8",
-        "pestphp/pest": "^2.5.0",
         "phpstan/phpstan": "^1.10.13",
+        "phpunit/phpunit": "^10.1",
         "rector/rector": "^0.15.24",
         "symfony/var-dumper": "^6.2.8"
     },
@@ -39,20 +40,19 @@
     "prefer-stable": true,
     "config": {
         "sort-packages": true,
-        "preferred-install": "dist",
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
+        "preferred-install": "dist"
     },
     "scripts": {
-        "refacto": "rector --ansi",
+        "refactor": "rector --ansi",
         "lint": "pint --ansi",
-        "test:refacto": "rector --dry-run --ansi",
+        "test:refactor": "rector --dry-run --ansi",
         "test:lint": "pint --test --ansi",
         "test:types": "phpstan analyse --ansi",
-        "test:unit": "pest --colors=always",
+        "test:unit": "phpunit --colors=always --testsuite=Unit",
+        "test:feature": "phpunit --colors=always --testsuite=Feature",
+        "test:coverage": "phpunit --coverage-html ./build",
         "test": [
-            "@test:refacto",
+            "@test:refactor",
             "@test:lint",
             "@test:types",
             "@test:unit"
