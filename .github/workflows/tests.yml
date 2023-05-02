@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ci:
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
@@ -57,9 +57,26 @@ jobs:
         php_extensions: xdebug
         coverage_clover: "coverage.xml"
 
-    - name: Upload to Codecov
-      uses: codecov/codecov-action@v2
+    - uses: actions/upload-artifact@v3
       with:
-        token: ${{ secrets.CODE_COV_TOKEN }}
-        files: ./coverage.xml
-        verbose: true
+          name: coverage
+          path: ./coverage.xml
+          retention-days: 1
+
+  coverage:
+    name: Upload coverage to Codecov
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Download coverage report
+        uses: actions/download-artifact@v3
+        with:
+            path: ${{ github.workspace }}
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODE_COV_TOKEN }}
+          files: ./coverage/coverage.xml
+          verbose: true
