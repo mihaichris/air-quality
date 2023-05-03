@@ -57,6 +57,9 @@ jobs:
         php_extensions: xdebug
         coverage_clover: "coverage.xml"
 
+    - name: Running Mutation Testing
+      run: composer test:mutation
+
     - uses: actions/upload-artifact@v3
       with:
           name: coverage
