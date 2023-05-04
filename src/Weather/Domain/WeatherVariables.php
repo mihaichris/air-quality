@@ -33,6 +33,7 @@ final class WeatherVariables extends ArrayObject
         return $weatherVariables;
     }
 
+    /** @return array<string, array<string, float|null>> */
     public function getGroupedByDateTime(): array
     {
         $groupedByDateTime = [];
@@ -44,6 +45,7 @@ final class WeatherVariables extends ArrayObject
         return $groupedByDateTime;
     }
 
+    /** @return array<string, string> */
     public function getUnits(): array
     {
         $units = [];
