@@ -2,10 +2,10 @@
 
 namespace Air\Quality\Weather\Domain\Filter;
 
+use Air\Quality\Weather\Domain\WeatherVariable;
 use DateTime;
 use FilterIterator;
 use Iterator;
-use Air\Quality\Weather\Domain\WeatherVariable;
 
 final class WeatherVariableDateTimeFilter extends FilterIterator
 {
