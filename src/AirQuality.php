@@ -2,48 +2,79 @@
 
 namespace Air\Quality;
 
-use Air\Quality\Weather\Variables;
+use Air\Quality\Exception\AirQualityResponseException;
+use Air\Quality\Weather\Domain\CellSelection;
+use Air\Quality\Weather\Domain\DomainsSource;
+use Air\Quality\Weather\Domain\Factory\AirQualityClientFactory;
+use Air\Quality\Weather\Domain\Variable;
+use Air\Quality\Weather\Infrastructure\AirQualityClient;
+use Air\Quality\Weather\Infrastructure\AirQualityResponse;
+use DateInterval;
+use DateTime;
 use DateTimeZone;
-use GuzzleHttp\Client;
-use Psr\Http\Client\ClientInterface;
+use InvalidArgumentException;
 
-class AirQuality
+final class AirQuality
 {
-    private array $weatherVariables = Variables::cases();
+    /** @var string[] */
+    private array $weatherVariables = [];
 
-    private Client $httpClient;
+    private readonly AirQualityClient $airQualityClient;
 
-    private string $domain = 'auto';
+    private DomainsSource $domainsSource = DomainsSource::AUTO;
 
     private string $timeFormat = 'iso8601';
 
-    private DateTimeZone $timezone = null;
+    private string $timezone = 'GMT';
+
+    private ?DateTime $startDate = null;
+
+    private ?DateTime $endDate = null;
+
+    private int $pastDays = 0;
+
+    private CellSelection $cellSelection = CellSelection::NEAREST;
+
+    private readonly AirQualityClientFactory $airQualityClientFactory;
 
     public function __construct(
         private readonly float $latitude,
         private readonly float $longitude,
-        private readonly $handler = null
+        ?callable $handler = null
     ) {
-        $this->httpClient = $this->createHttpClient($handler);
+        $this->airQualityClientFactory = new AirQualityClientFactory($handler);
+        $this->airQualityClient = $this->airQualityClientFactory->getClient();
+        $this->weatherVariables = Variable::values();
     }
 
-    public function domain(string $domain): self
+    public function setDomain(string $domain): self
     {
-        return $this->domain = $domain;
+        $this->domainsSource = DomainsSource::from($domain);
 
         return $this;
     }
 
-    public function timezone(DateTimeZone $dateTimeZone): self
+    public function setTimezone(string $timezone): self
     {
-        $this->timezone = $dateTimeZone;
+        if (! in_array($timezone, DateTimeZone::listIdentifiers())) {
+            throw new InvalidArgumentException(sprintf('The timezone is not support this %s.', $timezone));
+        }
+
+        $this->timezone = $timezone;
 
         return $this;
     }
 
-    public function timeFormat(string $timeFormat): self
+    public function setTimeFormat(string $timeFormat): self
     {
         $this->timeFormat = $timeFormat;
+
+        return $this;
+    }
+
+    public function setCellSelection(string $cellSelection): self
+    {
+        $this->cellSelection = CellSelection::from($cellSelection);
 
         return $this;
     }
@@ -56,35 +87,74 @@ class AirQuality
         return $this;
     }
 
-    public function now()
+    /**
+     * @throws AirQualityResponseException
+     */
+    public function getNow(): AirQualityResponse
     {
-        $params = $this->buildParams();
-        $response = $this->httpClient->get('/v1/air-quality', $params);
+        $weatherVariables = $this->airQualityClient->getAirQuality($this->buildParams());
+        $datetime = new DateTime('now', new DateTimeZone($this->timezone));
+        $weatherVariables = $weatherVariables->filterByDateTime($datetime);
+
+        return new AirQualityResponse($weatherVariables->getGroupedByDateTime(), $weatherVariables->getUnits());
     }
 
+    public function getBetweenDates(string $startDate, string $endDate): AirQualityResponse
+    {
+        $this->startDate = new DateTime($startDate, new DateTimeZone($this->timezone));
+        $this->endDate = new DateTime($endDate, new DateTimeZone($this->timezone));
+        $weatherVariables = $this->airQualityClient->getAirQuality($this->buildParams());
+        $weatherVariables = $weatherVariables->filterByDateTimeInterval($this->startDate, $this->endDate);
+
+        return new AirQualityResponse($weatherVariables->getGroupedByDateTime(), $weatherVariables->getUnits());
+    }
+
+    public function getPast(int $days = 0): AirQualityResponse
+    {
+        if ($days < 0) {
+            throw new InvalidArgumentException('The number of days in the past should be equal or greater than 0');
+        }
+
+        $this->pastDays = $days;
+        $startDateTime = new DateTime('today', new DateTimeZone($this->timezone));
+        $daysSubstractInterval = DateInterval::createFromDateString(sprintf('%d days', $days));
+        if ($daysSubstractInterval instanceof DateInterval) {
+            $startDateTime->sub($daysSubstractInterval);
+        }
+
+        $endDateTime = new DateTime('now', new DateTimeZone($this->timezone));
+        $weatherVariables = $this->airQualityClient->getAirQuality($this->buildParams());
+        $weatherVariables = $weatherVariables->filterByDateTimeInterval($startDateTime, $endDateTime);
+
+        return new AirQualityResponse($weatherVariables->getGroupedByDateTime(), $weatherVariables->getUnits());
+    }
+
+    /**
+     * @return array{'query': array{latitude: float, longitude: float, hourly: string, domains: string, timeformat: string, timezone: string, past_days?: int, start_date?: \DateTime, end_date?: \DateTime, cell_selection?: string}|array{latitude: float, longitude: float, hourly: string, domains: string, timeformat: string, timezone: string, past_days?: int, cell_selection?: string}}
+     */
     private function buildParams(): array
     {
-        return [
+        $params = [
             'query' => [
                 'latitude' => $this->latitude,
                 'longitude' => $this->longitude,
                 'hourly' => implode(',', $this->weatherVariables),
-                'domains' => $this->domain,
+                'domains' => $this->domainsSource->value,
                 'timeformat' => $this->timeFormat,
                 'timezone' => $this->timezone,
-                'past_days'
-            ]
+                'cell_selection' => $this->cellSelection->value,
+            ],
         ];
-    }
 
-    private function createHttpClient($handler = null): ClientInterface
-    {
-        $options = [
-            'base_uri' => 'https://air-quality-api.open-meteo.com/',
-        ];
-        if (null !== $handler) {
-            $options['handler'] = $handler;
+        if (! empty($this->pastDays)) {
+            $params['query']['past_days'] = $this->pastDays;
         }
-        return new Client($options);
+
+        if ($this->startDate instanceof \DateTime && $this->endDate instanceof \DateTime) {
+            $params['query']['start_date'] = $this->startDate;
+            $params['query']['end_date'] = $this->endDate;
+        }
+
+        return $params;
     }
 }
