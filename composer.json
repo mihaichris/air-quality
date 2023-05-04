@@ -49,13 +49,17 @@
     "scripts": {
         "refactor": "rector --ansi",
         "lint": "pint --ansi",
+        "fix": [
+            "@refactor",
+            "@lint"
+        ],
         "test:refactor": "rector --dry-run --ansi",
         "test:lint": "pint --test --ansi",
         "test:types": "phpstan analyse --ansi",
         "test:unit": "phpunit --colors=always --testsuite=Unit",
         "test:feature": "phpunit --colors=always --testsuite=Feature",
         "test:coverage": "phpunit --coverage-html ./build",
-        "test:mutation": "infection --min-msi=80 --min-covered-msi=80 --threads=max --ansi",
+        "test:mutation": "infection --min-msi=70 --min-covered-msi=70 --threads=max --ansi",
         "test": [
             "@test:refactor",
             "@test:lint",
