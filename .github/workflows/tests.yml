@@ -29,10 +29,10 @@ jobs:
     steps:
 
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Cache dependencies
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ~/.composer/cache/files
         key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
@@ -42,7 +42,7 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         extensions: dom, mbstring, zip
-        coverage: none
+        coverage: xdebug
 
     - name: Install Composer dependencies
       run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
@@ -53,7 +53,7 @@ jobs:
         XDEBUG_MODE: coverage
       with:
         bootstrap: vendor/autoload.php
-        configuration: ./phpunit.xml
+        configuration: phpunit.xml
         php_extensions: xdebug
         args: tests --coverage-clover ./coverage.xml
 
