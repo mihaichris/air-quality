@@ -47,8 +47,15 @@ jobs:
     - name: Install Composer dependencies
       run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
 
-    - name: Running Tests
-      run: composer test:coverage:clover
+    - name: PHPUnit Tests
+      uses: php-actions/phpunit@v3
+      env:
+        XDEBUG_MODE: coverage
+      with:
+        bootstrap: vendor/autoload.php
+        configuration: phpunit.xml
+        php_extensions: xdebug
+        args: tests --coverage-clover ./coverage.xml
 
     - name: Running Mutation Testing
       run: composer test:mutation
