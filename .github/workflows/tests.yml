@@ -48,14 +48,7 @@ jobs:
       run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
 
     - name: Running Tests
-      uses: php-actions/phpunit@v3
-      env:
-        XDEBUG_MODE: coverage
-      with:
-        bootstrap: vendor/autoload.php
-        configuration: phpunit.xml
-        php_extensions: xdebug
-        coverage_clover: "coverage.xml"
+      run: test:coverage:clover
 
     - name: Running Mutation Testing
       run: composer test:mutation
@@ -78,8 +71,7 @@ jobs:
             path: ${{ github.workspace }}
 
       - name: Upload to Codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODE_COV_TOKEN }}
-          files: ./coverage/coverage.xml
           verbose: true
