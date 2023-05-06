@@ -12,30 +12,42 @@
 
 
 
-## Description
+# Description
+Air-quality allows you to retrieve the values for different pollutants and pollen from a region based on specific coordinates 🍃. The library is powered by [OpenMeteo](https://open-meteo.com/en/docs/air-quality-api) air quality API. 
 
+# 🚀 Installation
 
-# Installation
-
-It can be installed using composer:
 ```php
 $ composer require mihaichris/air-quality
 ```
 
-
-## Basic Usage
+# Basic Usage
 
 ```php
+use Air\Quality;
+
+//Getting the air quality from Bucharest
+$airQuality = new AirQuality(44.43, 26.11);
+
+//Get the air quality now
+$airQuality->getNow();
+
+//Get the air quality in the past days.
+$airQuality->getPast(2);
+
+//Get the air quality between dates.
+$airQuality->getBetweenDates('2023-01-01', '2023-02-01');
 
 ```
 
-# Contributing
-Pull requests are welcome. For any changes, please open an issue first to discuss what you would like to change.
+# 👨‍💻 Author
+Mihai-Cristian Făgădău
+ * Github: [@mihaichris](https://github.com/mihaichris)
+ * LinkedIn: [in/mihai-fagadau](https://www.linkedin.com/in/mihai-fagadau/)
+ * Website: [mihaifagadau.dev](mihaifagadau.dev)
 
-Please make sure to update tests as appropriate.
+# 🤝 Contributing
+Contributing can be found at [here](./CONTRIBUTING.md).
 
-# CHANGELOG
- 
-
-# License
-[MIT](https://opensource.org/licenses/MIT)
+# 📝 License
+This project is [MIT](https://opensource.org/licenses/MIT) licensed.
