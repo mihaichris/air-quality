@@ -34,7 +34,7 @@ $airQuality->getNow();
 //Get the air quality in the past days.
 $airQuality->getPast(2);
 
-//Get the air quality between dates.
+//Get the air quality between specific dates.
 $airQuality->getBetweenDates('2023-01-01', '2023-02-01');
 
 ```
