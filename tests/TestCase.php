@@ -79,15 +79,12 @@ abstract class TestCase extends BaseTestCase
 
     public function assertResponseIsBetweenDates(AirQualityResponse $airQualityResponse, string $startDateTime, string $endDateTime)
     {
-        foreach ($airQualityResponse->hourly as $values) {
-            $this->assertEquals(array_key_first($values), date('Y-m-d H:00:00', strtotime($startDateTime)));
-            $this->assertEquals(array_key_last($values), date('Y-m-d H:00:00', strtotime($endDateTime)));
-        }
-        foreach ($airQualityResponse->hourly as $values) {
-            foreach ($values as $time => $value) {
-                $this->assertGreaterThanOrEqual(date('Y-m-d H:00:00', strtotime($startDateTime)), $time);
-                $this->assertLessThanOrEqual(date('Y-m-d H:00:00', strtotime($endDateTime)), $time);
-            }
+        $this->assertEquals(array_key_first($airQualityResponse->hourly), date('Y-m-d H:00:00', strtotime($startDateTime)));
+        $this->assertEquals(array_key_last($airQualityResponse->hourly), date('Y-m-d H:00:00', strtotime($endDateTime)));
+        $dates = array_keys($airQualityResponse->hourly);
+        foreach ($dates as $date) {
+            $this->assertGreaterThanOrEqual(date('Y-m-d H:00:00', strtotime($startDateTime)), $date);
+            $this->assertLessThanOrEqual(date('Y-m-d H:00:00', strtotime($endDateTime)), $date);
         }
     }
 

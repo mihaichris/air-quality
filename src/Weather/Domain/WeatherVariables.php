@@ -39,7 +39,7 @@ final class WeatherVariables extends ArrayObject
         $groupedByDateTime = [];
         /** @var WeatherVariable $weatherVariable */
         foreach ($this->getIterator() as $weatherVariable) {
-            $groupedByDateTime[$weatherVariable->variable->value][$weatherVariable->dateTime->format('Y-m-d H:i:s')] = $weatherVariable->value;
+            $groupedByDateTime[$weatherVariable->dateTime->format('Y-m-d H:i:s')][$weatherVariable->variable->value] = $weatherVariable->value;
         }
 
         return $groupedByDateTime;

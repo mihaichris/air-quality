@@ -33,7 +33,7 @@ class WeatherVariablesTest extends TestCase
     {
         $formatedCurrentDateTime = $this->startDateTime->format('Y-m-d H:i:s');
         $weatherVariables = $this->weatherVariables->filterByDateTime($this->startDateTime);
-        $this->assertEquals(['pm2_5' => [$formatedCurrentDateTime => 3], 'pm10' => [$formatedCurrentDateTime => 4], 'carbon_monoxide' => [$formatedCurrentDateTime => 1]], $weatherVariables->getGroupedByDateTime());
+        $this->assertEquals([$formatedCurrentDateTime => ['pm2_5' => 3, 'pm10' => 4, 'carbon_monoxide' => 1]], $weatherVariables->getGroupedByDateTime());
         $this->assertEquals(['pm2_5' => 'μg/m³', 'pm10' => 'μg/m³', 'carbon_monoxide' => 'μg/m³'], $weatherVariables->getUnits());
     }
 
@@ -42,7 +42,7 @@ class WeatherVariablesTest extends TestCase
         $formatedStartDate = $this->startDateTime->format('Y-m-d H:i:s');
         $formatedEndDate = $this->endDateTime->format('Y-m-d H:i:s');
         $weatherVariables = $this->weatherVariables->filterByDateTimeInterval($this->startDateTime, $this->endDateTime);
-        $this->assertEquals(['pm2_5' => [$formatedStartDate => 3, $formatedEndDate => 10], 'pm10' => [$formatedStartDate => 4, $formatedEndDate => 11], 'carbon_monoxide' => [$formatedStartDate => 1, $formatedEndDate => 110]], $weatherVariables->getGroupedByDateTime());
+        $this->assertEquals([$formatedStartDate => ['pm2_5' => 3, 'pm10' => 4, 'carbon_monoxide' => 1], $formatedEndDate => ['pm2_5' => 10, 'pm10' => 11, 'carbon_monoxide' => 110.0]], $weatherVariables->getGroupedByDateTime());
         $this->assertEquals(['pm2_5' => 'μg/m³', 'pm10' => 'μg/m³', 'carbon_monoxide' => 'μg/m³'], $weatherVariables->getUnits());
     }
 }
