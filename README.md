@@ -4,6 +4,8 @@
     <img src="./docs/cover.png" height="300" alt="Air Quality">
     <p align="center">
         <a href="https://github.com/mihaichris/air-quality/actions"><img alt="GitHub Workflow Status (master)" src="https://github.com/mihaichris/air-quality/actions/workflows/tests.yml/badge.svg"></a>
+        <a href="https://app.codecov.io/gh/mihaichris/air-quality"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/mihaichris/air-quality?color=%23FC0177&label=Codecov"></a>
+        <a href="https://github.com/mihaichris/air-quality/issues"><img alt="Open Issues" src="https://img.shields.io/github/issues/mihaichris/air-quality"></a>
     </p>
 </p>
 
