@@ -46,7 +46,7 @@ Mihai-Cristian Făgădău
  * Website: [mihaifagadau.dev](mihaifagadau.dev)
 
 # 🤝 Contributing
-Contributing can be found at [here](./CONTRIBUTING.md).
+Contribution details can be found at [here](./CONTRIBUTING.md).
 
 # 📝 License
 This project is [MIT](https://opensource.org/licenses/MIT) licensed.
