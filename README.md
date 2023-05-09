@@ -23,12 +23,12 @@ $ composer require mihaichris/air-quality
 # Basic Usage
 
 ```php
-use Air\Quality;
+use Air\Quality\AirQuality;
 
-//Getting the air quality from Bucharest
+//Getting the air quality from Bucharest.
 $airQuality = new AirQuality(44.43, 26.11);
 
-//Get the air quality now
+//Get the air quality now.
 $airQuality->getNow();
 
 //Get the air quality in the past days.
