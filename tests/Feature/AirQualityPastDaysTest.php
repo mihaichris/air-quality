@@ -127,10 +127,10 @@ class AirQualityPastDaysTest extends TestCase
         $this->assertAirQualityResponsePropertiesAreNotEmpty($response);
         $this->assertResponseIsFromPastDays($response, 0, 'Europe/Bucharest');
         $this->assertEquals(1, count($response->units));
-        $this->assertArrayHasKey('carbon_monoxide', $response->units);
+        $this->assertArrayHasKey('Carbon Monoxide', $response->units);
         foreach ($response->hourly as $values) {
             $this->assertEquals(1, count($values));
-            $this->assertArrayHasKey('carbon_monoxide', $values);
+            $this->assertArrayHasKey('Carbon Monoxide', $values);
         }
 
         return $airQuality;
@@ -248,10 +248,10 @@ class AirQualityPastDaysTest extends TestCase
         $this->assertAirQualityResponsePropertiesAreNotEmpty($response);
         $this->assertResponseIsFromPastDays($response, 1, 'Europe/Bucharest');
         $this->assertEquals(1, count($response->units));
-        $this->assertArrayHasKey('carbon_monoxide', $response->units);
+        $this->assertArrayHasKey('Carbon Monoxide', $response->units);
         foreach ($response->hourly as $values) {
             $this->assertEquals(1, count($values));
-            $this->assertArrayHasKey('carbon_monoxide', $values);
+            $this->assertArrayHasKey('Carbon Monoxide', $values);
         }
 
         return $airQuality;

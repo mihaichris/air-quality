@@ -39,7 +39,9 @@ final class WeatherVariables extends ArrayObject
         $groupedByDateTime = [];
         /** @var WeatherVariable $weatherVariable */
         foreach ($this->getIterator() as $weatherVariable) {
-            $groupedByDateTime[$weatherVariable->dateTime->format('Y-m-d H:i:s')][$weatherVariable->variable->value] = $weatherVariable->value;
+            $dateTime = $weatherVariable->dateTime->format('Y-m-d H:i:s');
+            $label = $weatherVariable->variable->getLabel();
+            $groupedByDateTime[$dateTime][$label] = $weatherVariable->value;
         }
 
         return $groupedByDateTime;
@@ -51,7 +53,7 @@ final class WeatherVariables extends ArrayObject
         $units = [];
         /** @var WeatherVariable $weatherVariable */
         foreach ($this->getIterator() as $weatherVariable) {
-            $units[$weatherVariable->variable->value] = $weatherVariable->unit;
+            $units[$weatherVariable->variable->getLabel()] = $weatherVariable->unit;
         }
 
         return $units;

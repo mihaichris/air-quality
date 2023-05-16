@@ -138,10 +138,10 @@ class AirQualityBetweenDaysTest extends TestCase
         $this->assertAirQualityResponsePropertiesAreNotEmpty($response);
         $this->assertResponseIsBetweenDates($response, $this->startDateTime, $this->endDateTime);
         $this->assertEquals(1, count($response->units));
-        $this->assertArrayHasKey('carbon_monoxide', $response->units);
+        $this->assertArrayHasKey('Carbon Monoxide', $response->units);
         foreach ($response->hourly as $values) {
             $this->assertEquals(1, count($values));
-            $this->assertArrayHasKey('carbon_monoxide', $values);
+            $this->assertArrayHasKey('Carbon Monoxide', $values);
         }
 
         return $airQuality;

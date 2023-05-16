@@ -46,19 +46,19 @@ class AirQualityClientTest extends TestCase
         $this->assertNotEmpty($weatherVariables);
         $this->assertEquals(
             [
-                '2023-04-25 00:00:00' => ['pm10' => 18.7, 'pm2_5' => 15.9, 'carbon_monoxide' => 171.0],
-                '2023-04-25 01:00:00' => ['pm10' => 17.8, 'pm2_5' => 15.2, 'carbon_monoxide' => 165.0],
-                '2023-04-25 02:00:00' => ['pm10' => 17.2, 'pm2_5' => 14.0, 'carbon_monoxide' => 162.0],
-                '2023-04-25 03:00:00' => ['pm10' => 16.7, 'pm2_5' => 13.6, 'carbon_monoxide' => 163.0],
-                '2023-04-25 04:00:00' => ['pm10' => 17.1, 'pm2_5' => 13.4, 'carbon_monoxide' => 168.0]
+                '2023-04-25 00:00:00' => ['Particulate Matter (PM10)' => 18.7, 'Particulate Matter (PM2.5)' => 15.9, 'Carbon Monoxide' => 171.0],
+                '2023-04-25 01:00:00' => ['Particulate Matter (PM10)' => 17.8, 'Particulate Matter (PM2.5)' => 15.2, 'Carbon Monoxide' => 165.0],
+                '2023-04-25 02:00:00' => ['Particulate Matter (PM10)' => 17.2, 'Particulate Matter (PM2.5)' => 14.0, 'Carbon Monoxide' => 162.0],
+                '2023-04-25 03:00:00' => ['Particulate Matter (PM10)' => 16.7, 'Particulate Matter (PM2.5)' => 13.6, 'Carbon Monoxide' => 163.0],
+                '2023-04-25 04:00:00' => ['Particulate Matter (PM10)' => 17.1, 'Particulate Matter (PM2.5)' => 13.4, 'Carbon Monoxide' => 168.0]
             ],
             $weatherVariables->getGroupedByDateTime()
         );
         $this->assertEquals(
             [
-                'pm10' => 'μg/m³',
-                'pm2_5' => 'μg/m³',
-                'carbon_monoxide' => 'μg/m³',
+                'Particulate Matter (PM10)' => 'μg/m³',
+                'Particulate Matter (PM2.5)' => 'μg/m³',
+                'Carbon Monoxide' => 'μg/m³',
             ],
             $weatherVariables->getUnits()
         );

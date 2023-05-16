@@ -33,8 +33,8 @@ class WeatherVariablesTest extends TestCase
     {
         $formatedCurrentDateTime = $this->startDateTime->format('Y-m-d H:i:s');
         $weatherVariables = $this->weatherVariables->filterByDateTime($this->startDateTime);
-        $this->assertEquals([$formatedCurrentDateTime => ['pm2_5' => 3, 'pm10' => 4, 'carbon_monoxide' => 1]], $weatherVariables->getGroupedByDateTime());
-        $this->assertEquals(['pm2_5' => 'μg/m³', 'pm10' => 'μg/m³', 'carbon_monoxide' => 'μg/m³'], $weatherVariables->getUnits());
+        $this->assertEquals([$formatedCurrentDateTime => ['Particulate Matter (PM2.5)' => 3, 'Particulate Matter (PM10)' => 4, 'Carbon Monoxide' => 1]], $weatherVariables->getGroupedByDateTime());
+        $this->assertEquals(['Particulate Matter (PM2.5)' => 'μg/m³', 'Particulate Matter (PM10)' => 'μg/m³', 'Carbon Monoxide' => 'μg/m³'], $weatherVariables->getUnits());
     }
 
     public function test_filter_by_datetime_interval()
@@ -42,7 +42,7 @@ class WeatherVariablesTest extends TestCase
         $formatedStartDate = $this->startDateTime->format('Y-m-d H:i:s');
         $formatedEndDate = $this->endDateTime->format('Y-m-d H:i:s');
         $weatherVariables = $this->weatherVariables->filterByDateTimeInterval($this->startDateTime, $this->endDateTime);
-        $this->assertEquals([$formatedStartDate => ['pm2_5' => 3, 'pm10' => 4, 'carbon_monoxide' => 1], $formatedEndDate => ['pm2_5' => 10, 'pm10' => 11, 'carbon_monoxide' => 110.0]], $weatherVariables->getGroupedByDateTime());
-        $this->assertEquals(['pm2_5' => 'μg/m³', 'pm10' => 'μg/m³', 'carbon_monoxide' => 'μg/m³'], $weatherVariables->getUnits());
+        $this->assertEquals([$formatedStartDate => ['Particulate Matter (PM2.5)' => 3, 'Particulate Matter (PM10)' => 4, 'Carbon Monoxide' => 1], $formatedEndDate => ['Particulate Matter (PM2.5)' => 10, 'Particulate Matter (PM10)' => 11, 'Carbon Monoxide' => 110.0]], $weatherVariables->getGroupedByDateTime());
+        $this->assertEquals(['Particulate Matter (PM2.5)' => 'μg/m³', 'Particulate Matter (PM10)' => 'μg/m³', 'Carbon Monoxide' => 'μg/m³'], $weatherVariables->getUnits());
     }
 }
