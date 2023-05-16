@@ -25,4 +25,29 @@ enum Variable: string
     case MugwortPollen = 'mugwort_pollen';
     case OlivePollen = 'olive_pollen';
     case RagweedPollen = 'ragweed_pollen';
+
+    public function getLabel(): string
+    {
+        $labelMapping = [
+            'pm10' => 'Particulate Matter (PM10)',
+            'pm2_5' => 'Particulate Matter (PM2.5)',
+            'carbon_monoxide' => 'Carbon Monoxide',
+            'nitrogen_dioxide' => 'Nitrogen Dioxide',
+            'sulphur_dioxide' => 'Sulphur Dioxide',
+            'ozone' => 'Ozone',
+            'aerosol_optical_depth' => 'Aerosol Optical Depth',
+            'dust' => 'Dust',
+            'uv_index' => 'UV Index',
+            'uv_index_clear_sky' => 'UV Index Clear Sky',
+            'ammonia' => 'Ammonia',
+            'alder_pollen' => 'Alder Pollen',
+            'birch_pollen' => 'Birch Pollen',
+            'grass_pollen' => 'Grass Pollen',
+            'mugwort_pollen' => 'Mugwort Pollen',
+            'olive_pollen' => 'Olive Pollen',
+            'ragweed_pollen' => 'Ragweed Pollen'
+        ];
+
+        return $labelMapping[$this->value];
+    }
 }
