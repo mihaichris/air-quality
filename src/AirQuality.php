@@ -23,8 +23,6 @@ final class AirQuality
 
     private DomainsSource $domainsSource = DomainsSource::AUTO;
 
-    private string $timeFormat = 'iso8601';
-
     private string $timezone = 'GMT';
 
     private ?DateTime $startDate = null;
@@ -56,18 +54,11 @@ final class AirQuality
 
     public function setTimezone(string $timezone): self
     {
-        if (! in_array($timezone, DateTimeZone::listIdentifiers())) {
+        if (!in_array($timezone, DateTimeZone::listIdentifiers())) {
             throw new InvalidArgumentException(sprintf('The timezone is not support this %s.', $timezone));
         }
 
         $this->timezone = $timezone;
-
-        return $this;
-    }
-
-    public function setTimeFormat(string $timeFormat): self
-    {
-        $this->timeFormat = $timeFormat;
 
         return $this;
     }
@@ -130,7 +121,7 @@ final class AirQuality
     }
 
     /**
-     * @return array{'query': array{latitude: float, longitude: float, hourly: string, domains: string, timeformat: string, timezone: string, past_days?: int, start_date?: \DateTime, end_date?: \DateTime, cell_selection?: string}|array{latitude: float, longitude: float, hourly: string, domains: string, timeformat: string, timezone: string, past_days?: int, cell_selection?: string}}
+     * @return array{'query': array{latitude: float, longitude: float, hourly: string, domains: string, timezone: string, past_days?: int, start_date?: \DateTime, end_date?: \DateTime, cell_selection?: string}|array{latitude: float, longitude: float, hourly: string, domains: string, timeformat: string, timezone: string, past_days?: int, cell_selection?: string}}
      */
     private function buildParams(): array
     {
@@ -140,13 +131,12 @@ final class AirQuality
                 'longitude' => $this->longitude,
                 'hourly' => implode(',', $this->weatherVariables),
                 'domains' => $this->domainsSource->value,
-                'timeformat' => $this->timeFormat,
                 'timezone' => $this->timezone,
                 'cell_selection' => $this->cellSelection->value,
             ],
         ];
 
-        if (! empty($this->pastDays)) {
+        if (!empty($this->pastDays)) {
             $params['query']['past_days'] = $this->pastDays;
         }
 

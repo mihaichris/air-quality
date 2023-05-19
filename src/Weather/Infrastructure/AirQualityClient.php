@@ -17,7 +17,7 @@ final readonly class AirQualityClient
     }
 
     /**
-     * @param  array{'query': array{latitude: float, longitude: float, hourly: string, domains: string, timeformat: string, timezone: string, past_days?: int, start_date?: \DateTime, end_date?: \DateTime, cell_selection?: string}|array{latitude: float, longitude: float, hourly: string, domains: string, timeformat: string, timezone: string, past_days?: int, cell_selection?: string}}  $params
+     * @param  array{'query': array{latitude: float, longitude: float, hourly: string, domains: string, timezone: string, past_days?: int, start_date?: \DateTime, end_date?: \DateTime, cell_selection?: string}|array{latitude: float, longitude: float, hourly: string, domains: string, timeformat: string, timezone: string, past_days?: int, cell_selection?: string}}  $params
      */
     public function getAirQuality(array $params): WeatherVariables
     {
@@ -43,14 +43,7 @@ final readonly class AirQualityClient
         foreach ($timeToWeatherVariable as $variable => $timeToWeatherVariable) {
             foreach ($timeToWeatherVariable as $time => $value) {
                 $unit = $airQualityResponse['hourly_units'][$variable];
-                if ($this->isTimeStamp($time)) {
-                    $datetime = new DateTime();
-                    $datetime->setTimestamp($time);
-                } else {
-                    $datetime = new DateTime($time);
-                }
-
-                $weatherVariable = new WeatherVariable(Variable::from($variable), $value, $unit, $datetime);
+                $weatherVariable = new WeatherVariable(Variable::from($variable), $value, $unit, new DateTime($time));
                 $weatherVariables->append($weatherVariable);
             }
         }
@@ -77,10 +70,5 @@ final readonly class AirQualityClient
         }
 
         return $timeToWeatherVariable;
-    }
-
-    private function isTimeStamp(string|int $timestamp): bool
-    {
-        return is_int($timestamp);
     }
 }

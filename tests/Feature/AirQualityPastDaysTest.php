@@ -51,18 +51,6 @@ class AirQualityPastDaysTest extends TestCase
     }
 
     /** @depends test_getting_air_quality_past_0_days_with_cams_global_should_return_an_air_quality_response */
-    public function test_getting_air_quality_past_0_days_with_time_format_should_return_an_air_quality_response(AirQuality $airQuality)
-    {
-        $airQuality->setTimeFormat('unixtime');
-        $response = $airQuality->getPast();
-        $this->assertIsAirQualityResponseInstance($response);
-        $this->assertAirQualityResponsePropertiesAreNotEmpty($response);
-        $this->assertResponseIsFromPastDays($response, 0, 'GMT');
-
-        return $airQuality;
-    }
-
-    /** @depends test_getting_air_quality_past_0_days_with_time_format_should_return_an_air_quality_response */
     public function test_getting_air_quality_past_0_days_with_wrong_timezone_should_return_an_air_quality_response(AirQuality $airQuality)
     {
         $this->expectExceptionObject(new InvalidArgumentException(sprintf('The timezone is not support this wrong_time_zone.')));
@@ -70,7 +58,7 @@ class AirQualityPastDaysTest extends TestCase
         $airQuality->getPast();
     }
 
-    /** @depends test_getting_air_quality_past_0_days_with_time_format_should_return_an_air_quality_response */
+    /** @depends test_getting_air_quality_past_0_days_with_cams_global_should_return_an_air_quality_response */
     public function test_getting_air_quality_past_0_days_with_good_timezone_should_return_an_air_quality_response(AirQuality $airQuality)
     {
         $airQuality->setTimezone('Europe/Bucharest');
@@ -172,18 +160,6 @@ class AirQualityPastDaysTest extends TestCase
     }
 
     /** @depends test_getting_air_quality_past_1_days_with_cams_global_should_return_an_air_quality_response */
-    public function test_getting_air_quality_past_1_days_with_time_format_should_return_an_air_quality_response(AirQuality $airQuality)
-    {
-        $airQuality->setTimeFormat('unixtime');
-        $response = $airQuality->getPast(1);
-        $this->assertIsAirQualityResponseInstance($response);
-        $this->assertAirQualityResponsePropertiesAreNotEmpty($response);
-        $this->assertResponseIsFromPastDays($response, 1, 'GMT');
-
-        return $airQuality;
-    }
-
-    /** @depends test_getting_air_quality_past_1_days_with_time_format_should_return_an_air_quality_response */
     public function test_getting_air_quality_past_1_days_with_wrong_timezone_should_return_an_air_quality_response(AirQuality $airQuality)
     {
         $this->expectExceptionObject(new InvalidArgumentException(sprintf('The timezone is not support this wrong_time_zone.')));
@@ -191,7 +167,7 @@ class AirQualityPastDaysTest extends TestCase
         $airQuality->getPast(1);
     }
 
-    /** @depends test_getting_air_quality_past_1_days_with_time_format_should_return_an_air_quality_response */
+    /** @depends test_getting_air_quality_past_1_days_with_cams_global_should_return_an_air_quality_response */
     public function test_getting_air_quality_past_1_days_with_good_timezone_should_return_an_air_quality_response(AirQuality $airQuality)
     {
         $airQuality->setTimezone('Europe/Bucharest');
