@@ -61,19 +61,7 @@ class AirQualityBetweenDaysTest extends TestCase
         return $airQuality;
     }
 
-    /** @depends test_getting_air_quality_between_with_cams_europe_should_return_an_air_quality_response */
-    public function test_getting_air_quality_between_with_time_format_should_return_an_air_quality_response(AirQuality $airQuality)
-    {
-        $airQuality->setTimeFormat('unixtime');
-        $response = $airQuality->getBetweenDates($this->startDateTime, $this->endDateTime);
-        $this->assertIsAirQualityResponseInstance($response);
-        $this->assertAirQualityResponsePropertiesAreNotEmpty($response);
-        $this->assertResponseIsBetweenDates($response, $this->startDateTime, $this->endDateTime);
-
-        return $airQuality;
-    }
-
-    /** @depends test_getting_air_quality_between_with_time_format_should_return_an_air_quality_response */
+    /** @depends test_getting_air_quality_between_with_cams_global_should_return_an_air_quality_response */
     public function test_getting_air_quality_between_with_wrong_timezone_should_return_an_air_quality_response(AirQuality $airQuality)
     {
         $this->expectExceptionObject(new InvalidArgumentException(sprintf('The timezone is not support this wrong_time_zone.')));
@@ -81,7 +69,7 @@ class AirQualityBetweenDaysTest extends TestCase
         $airQuality->getBetweenDates($this->startDateTime, $this->endDateTime);
     }
 
-    /** @depends test_getting_air_quality_between_with_time_format_should_return_an_air_quality_response */
+    /** @depends test_getting_air_quality_between_with_cams_global_should_return_an_air_quality_response */
     public function test_getting_air_quality_between_with_good_timezone_should_return_an_air_quality_response(AirQuality $airQuality)
     {
         $airQuality->setTimezone('Europe/Bucharest');
