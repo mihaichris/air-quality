@@ -3,6 +3,7 @@
 namespace Air\Quality\Tests\Feature;
 
 use Air\Quality\AirQuality;
+use Air\Quality\Exception\AirQualityResponseException;
 use Air\Quality\Tests\TestCase;
 use InvalidArgumentException;
 
@@ -29,12 +30,11 @@ class AirQualityBetweenDaysTest extends TestCase
         return $airQuality;
     }
 
-    public function test_getting_air_quality_between_reversed_dates_should_return_an_empty_air_quality_response()
+    public function test_getting_air_quality_between_reversed_dates_should_return_throw_exception()
     {
+        $this->expectException(AirQualityResponseException::class);
         $airQuality = new AirQuality(44.43, 26.11);
         $response = $airQuality->getBetweenDates($this->endDateTime, $this->startDateTime);
-        $this->assertIsAirQualityResponseInstance($response);
-        $this->assertAirQualityResponsePropertiesAreEmpty($response);
     }
 
     /** @depends test_getting_air_quality_between_should_return_an_air_quality_response */

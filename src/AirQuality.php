@@ -121,7 +121,7 @@ final class AirQuality
     }
 
     /**
-     * @return array{'query': array{latitude: float, longitude: float, hourly: string, domains: string, timezone: string, past_days?: int, start_date?: \DateTime, end_date?: \DateTime, cell_selection?: string}|array{latitude: float, longitude: float, hourly: string, domains: string, timeformat: string, timezone: string, past_days?: int, cell_selection?: string}}
+     * @return array{'query': array{latitude: float, longitude: float, hourly: string, domains: string, timezone: string, past_days?: int, start_date?: string, end_date?: string, cell_selection?: string}|array{latitude: float, longitude: float, hourly: string, domains: string, timeformat: string, timezone: string, past_days?: int, cell_selection?: string}}
      */
     private function buildParams(): array
     {
@@ -141,8 +141,8 @@ final class AirQuality
         }
 
         if ($this->startDate instanceof \DateTime && $this->endDate instanceof \DateTime) {
-            $params['query']['start_date'] = $this->startDate;
-            $params['query']['end_date'] = $this->endDate;
+            $params['query']['start_date'] = $this->startDate->format('Y-m-d');
+            $params['query']['end_date'] = $this->endDate->format('Y-m-d');
         }
 
         return $params;
