@@ -20,7 +20,7 @@
 
 ### Fixed
 
--  
+-  [#2](https://github.com/mihaichris/air-quality/pull/2) Fixed between dates params
 
 ## 0.2.1 - 2023-05-17
 
