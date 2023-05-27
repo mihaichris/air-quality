@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.2.2 - 2023-05-27
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+-  [#2](https://github.com/mihaichris/air-quality/pull/2) Fixed between dates params
+
 ## 0.2.1 - 2023-05-17
 
 ### Added
