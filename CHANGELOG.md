@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.3.0 - 2023-06-23
+
+### Added
+
+- [#3](https://github.com/mihaichris/air-quality/pull/3) Added method to retrieve available weather variables
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.2.2 - 2023-05-27
 
 ### Added
