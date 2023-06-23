@@ -120,6 +120,12 @@ final class AirQuality
         return new AirQualityResponse($weatherVariables->getGroupedByDateTime(), $weatherVariables->getUnits());
     }
 
+    /** @return string[] */
+    public function getWeatherVariables(): array
+    {
+        return Variable::getLabelMappings();
+    }
+
     /**
      * @return array{'query': array{latitude: float, longitude: float, hourly: string, domains: string, timezone: string, past_days?: int, start_date?: string, end_date?: string, cell_selection?: string}|array{latitude: float, longitude: float, hourly: string, domains: string, timeformat: string, timezone: string, past_days?: int, cell_selection?: string}}
      */

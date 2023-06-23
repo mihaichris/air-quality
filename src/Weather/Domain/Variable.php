@@ -28,7 +28,15 @@ enum Variable: string
 
     public function getLabel(): string
     {
-        $labelMapping = [
+        $labelMapping = self::getLabelMappings();
+
+        return $labelMapping[$this->value];
+    }
+
+    /** @return array{pm10: string, pm2_5: string, carbon_monoxide: string, nitrogen_dioxide: string, sulphur_dioxide: string, ozone: string, aerosol_optical_depth: string, dust: string, uv_index: string, uv_index_clear_sky: string, ammonia: string, alder_pollen: string, birch_pollen: string, grass_pollen: string, mugwort_pollen: string, olive_pollen: string, ragweed_pollen: string} */
+    public static function getLabelMappings(): array
+    {
+        return [
             'pm10' => 'Particulate Matter (PM10)',
             'pm2_5' => 'Particulate Matter (PM2.5)',
             'carbon_monoxide' => 'Carbon Monoxide',
@@ -47,7 +55,5 @@ enum Variable: string
             'olive_pollen' => 'Olive Pollen',
             'ragweed_pollen' => 'Ragweed Pollen'
         ];
-
-        return $labelMapping[$this->value];
     }
 }
