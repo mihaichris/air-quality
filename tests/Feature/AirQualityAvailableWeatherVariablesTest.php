@@ -7,7 +7,6 @@ class AirQualityAvailableWeatherVariablesTest extends TestCase
 {
     public function test_get_available_weather_variables()
     {
-        $airQuality = new AirQuality(44.43, 26.11);
         $expectedWeatherVariables = [
             'pm10' => 'Particulate Matter (PM10)',
             'pm2_5' => 'Particulate Matter (PM2.5)',
@@ -27,6 +26,6 @@ class AirQualityAvailableWeatherVariablesTest extends TestCase
             'olive_pollen' => 'Olive Pollen',
             'ragweed_pollen' => 'Ragweed Pollen'
         ];
-        $this->assertEquals($expectedWeatherVariables, $airQuality->getWeatherVariables());
+        $this->assertEquals($expectedWeatherVariables, AirQuality::getWeatherVariables());
     }
 }
