@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 class AirQualityPastDaysTest extends TestCase
 {
-    public function test_getting_air_quality_past_0_days_with_negative_days_would_return_exception()
+    public function test_getting_air_quality_past_days_with_negative_days_would_return_exception()
     {
         $this->expectExceptionObject(new InvalidArgumentException('The number of days in the past should be equal or greater than 0'));
         $airQuality = new AirQuality(44.43, 26.11);

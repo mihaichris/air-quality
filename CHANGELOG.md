@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.4.0 - 2023-07-15
+
+### Added
+
+- [#5](https://github.com/mihaichris/air-quality/pull/5) Get air-quality forecast
+
+### Changed
+
+- [#4](https://github.com/mihaichris/air-quality/pull/4) Changed get weather variable into static method
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
+
 ## 0.3.0 - 2023-06-23
 
 ### Added

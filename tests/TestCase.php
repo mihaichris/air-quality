@@ -90,9 +90,17 @@ abstract class TestCase extends BaseTestCase
 
     public function assertResponseIsFromPastDays(AirQualityResponse $airQualityResponse, int $days, string $timezone)
     {
-        $startDateTime = new DateTime('today', new DateTimeZone($timezone));
+        $startDateTime = new DateTime('now', new DateTimeZone($timezone));
         $startDateTime->sub(DateInterval::createFromDateString(sprintf('%d days', $days)));
         $endDateTime = new DateTime('now', new DateTimeZone($timezone));
+        $this->assertResponseIsBetweenDates($airQualityResponse, $startDateTime->format('Y-m-d H:i:s'), $endDateTime->format('Y-m-d H:i:s'));
+    }
+
+    public function assertResponseIsFromNextDays(AirQualityResponse $airQualityResponse, int $days, string $timezone)
+    {
+        $startDateTime = new DateTime('now', new DateTimeZone($timezone));
+        $endDateTime = new DateTime('now', new DateTimeZone($timezone));
+        $endDateTime->add(DateInterval::createFromDateString(sprintf('%d days', $days)));
         $this->assertResponseIsBetweenDates($airQualityResponse, $startDateTime->format('Y-m-d H:i:s'), $endDateTime->format('Y-m-d H:i:s'));
     }
 }
