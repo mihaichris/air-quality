@@ -107,13 +107,32 @@ final class AirQuality
         }
 
         $this->pastDays = $days;
-        $startDateTime = new DateTime('today', new DateTimeZone($this->timezone));
+        $startDateTime = new DateTime('now', new DateTimeZone($this->timezone));
         $daysSubstractInterval = DateInterval::createFromDateString(sprintf('%d days', $days));
         if ($daysSubstractInterval instanceof DateInterval) {
             $startDateTime->sub($daysSubstractInterval);
         }
 
         $endDateTime = new DateTime('now', new DateTimeZone($this->timezone));
+        $weatherVariables = $this->airQualityClient->getAirQuality($this->buildParams());
+        $weatherVariables = $weatherVariables->filterByDateTimeInterval($startDateTime, $endDateTime);
+
+        return new AirQualityResponse($weatherVariables->getGroupedByDateTime(), $weatherVariables->getUnits());
+    }
+
+    public function getNext(int $days = 1): AirQualityResponse
+    {
+        if ($days < 0) {
+            throw new InvalidArgumentException('The number of days in the future should be equal or greater than 0');
+        }
+
+        $startDateTime = new DateTime('now', new DateTimeZone($this->timezone));
+        $daysSubstractInterval = DateInterval::createFromDateString(sprintf('%d days', $days));
+        $endDateTime = new DateTime('now', new DateTimeZone($this->timezone));
+        if ($daysSubstractInterval instanceof DateInterval) {
+            $endDateTime->add($daysSubstractInterval);
+        }
+
         $weatherVariables = $this->airQualityClient->getAirQuality($this->buildParams());
         $weatherVariables = $weatherVariables->filterByDateTimeInterval($startDateTime, $endDateTime);
 
