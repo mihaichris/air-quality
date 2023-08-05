@@ -25,6 +25,7 @@ enum Variable: string
     case MugwortPollen = 'mugwort_pollen';
     case OlivePollen = 'olive_pollen';
     case RagweedPollen = 'ragweed_pollen';
+    case EuropeanAQI = 'european_aqi';
 
     public function getLabel(): string
     {
@@ -53,7 +54,8 @@ enum Variable: string
             'grass_pollen' => 'Grass Pollen',
             'mugwort_pollen' => 'Mugwort Pollen',
             'olive_pollen' => 'Olive Pollen',
-            'ragweed_pollen' => 'Ragweed Pollen'
+            'ragweed_pollen' => 'Ragweed Pollen',
+            'european_aqi' => 'European Air Quality Index (AQI)'
         ];
     }
 }
