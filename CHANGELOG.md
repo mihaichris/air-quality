@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.5.0 - 2023-08-05
+
+### Added
+
+- [#6](https://github.com/mihaichris/air-quality/pull/7) European index air quality
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.4.0 - 2023-07-15
 
 ### Added
@@ -21,7 +43,6 @@
 ### Fixed
 
 - Nothing.
-
 
 ## 0.3.0 - 2023-06-23
 
