@@ -24,7 +24,8 @@ class AirQualityAvailableWeatherVariablesTest extends TestCase
             'grass_pollen' => 'Grass Pollen',
             'mugwort_pollen' => 'Mugwort Pollen',
             'olive_pollen' => 'Olive Pollen',
-            'ragweed_pollen' => 'Ragweed Pollen'
+            'ragweed_pollen' => 'Ragweed Pollen',
+            'european_aqi' => 'European Air Quality Index (AQI)'
         ];
         $this->assertEquals($expectedWeatherVariables, AirQuality::getWeatherVariables());
     }
